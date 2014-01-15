@@ -1,0 +1,25 @@
+{
+    "name": "seyon/composerPlugin",
+    "type": "composer-plugin",
+    "description": "composer Plugin to add dynamicly package",
+    "keywords": ["plugin"],
+    "homepage": "https://github.com/seyon/composerPlugin",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Christian Wielath",
+            "email": "info@script-brain.de",
+            "homepage": "https://github.com/seyon/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "composer-plugin-api": "1.0.0"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "Seyon\\": "" }
+    },
+    "target-dir": "Seyon/"
+}
