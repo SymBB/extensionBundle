@@ -1,5 +1,5 @@
 {
-    "name": "symbb/composer-plugin",
+    "name": "symbb/extension-bundle",
     "type": "composer-plugin",
     "description": "composer Plugin to add dynamicly package",
     "keywords": ["plugin"],
@@ -19,12 +19,12 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "SymBB\\ComposerPlugin\\": "" }
+        "psr-0": { "SymBB\\ExtensionBundle\\": "" }
     },
-    "target-dir": "SymBB/ComposerPlugin",
+    "target-dir": "SymBB/ExtensionBundle",
     "extra": {
         "class": [
-            "SymBB\\ComposerPlugin\\PackageManagerPlugin"
+            "SymBB\\ExtensionBundle\\ComposerPlugin"
         ]
     }
 }
