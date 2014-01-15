@@ -6,6 +6,7 @@ namespace Seyon\ComposerPlugin;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use Symfony\Component\Yaml\Parser;
 
 class PackageManagerPlugin implements PluginInterface {
     
