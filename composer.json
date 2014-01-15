@@ -21,5 +21,10 @@
     "autoload": {
         "psr-0": { "Seyon\\": "" }
     },
-    "target-dir": "Seyon/"
+    "target-dir": "Seyon/",
+    "extra": {
+        "class": [
+            "Seyon\ComposerPlugin\PackageManagerPlugin"
+        ]
+    }
 }
