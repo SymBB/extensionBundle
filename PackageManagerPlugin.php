@@ -11,8 +11,10 @@ class PackageManagerPlugin implements PluginInterface {
     
     public function activate(Composer $composer, IOInterface $io)
     {
-        $installer = $composer->getInstallationManager()->getInstaller('seyon/symbb');
-        var_dump(get_class($installer));
+        $package = $composer->getPackage();
+        $requires = $package->getRequires();
+        $package->setRequires($requires);
+        var_dump(get_class($requires));
     }
     
 }
