@@ -11,14 +11,31 @@ class PackageManagerPlugin implements PluginInterface {
     
     public function activate(Composer $composer, IOInterface $io)
     {
+        
+        $searchPath = __DIR__.'/../../../../../app/config/';
+        
+        $yaml   = new Parser();
+        $extensionList = $yaml->parse(file_get_contents($searchPath.'extension.yml'));
+
+        $required = array();
+        
+        foreach($extensionList['extensions'] as $extension => $data){
+            if($data['enabled']){
+                $required[$data['package']] = $data['version'];
+            }
+        }
+        
+        $finder     = new Finder();
+        $finder->files()
+               ->in($searchPath)
+               ->name('*Bundle.php');
+        
         $manager = $composer->getRepositoryManager();
         $config = array(
             'package' => array(
-                'name' => 'seyon/composer-plugin-package',
+                'name' => 'symbb/composer-plugin-package',
                 'version' => "dev-master",
-                "require"=> array(
-                    "seyon/teamspeak3-framework" => "dev-master"
-               )
+                "require"=> $required
             )
         );
         $repo = $manager->createRepository('package', $config);

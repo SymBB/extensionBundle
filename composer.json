@@ -1,5 +1,5 @@
 {
-    "name": "seyon/composer-plugin",
+    "name": "symbb/composer-plugin",
     "type": "composer-plugin",
     "description": "composer Plugin to add dynamicly package",
     "keywords": ["plugin"],
@@ -19,12 +19,12 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Seyon\\ComposerPlugin\\": "" }
+        "psr-0": { "SymBB\\ComposerPlugin\\": "" }
     },
-    "target-dir": "Seyon/ComposerPlugin",
+    "target-dir": "SymBB/ComposerPlugin",
     "extra": {
         "class": [
-            "Seyon\\ComposerPlugin\\PackageManagerPlugin"
+            "SymBB\\ComposerPlugin\\PackageManagerPlugin"
         ]
     }
 }
