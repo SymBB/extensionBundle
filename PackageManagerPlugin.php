@@ -6,7 +6,6 @@ namespace Seyon\ComposerPlugin;
 use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
-use Composer\Plugin\PluginEvents;
 
 class PackageManagerPlugin implements PluginInterface {
     
