@@ -14,7 +14,7 @@ class PackageManagerPlugin implements PluginInterface {
         $package = $composer->getPackage();
         $requires = $package->getRequires();
         $package->setRequires($requires);
-        var_dump(get_class($requires));
+        var_dump($requires);
     }
     
 }
