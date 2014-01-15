@@ -1,6 +1,6 @@
 <?php
 
-namespace Seyon\ComposerPlugin;
+namespace SymBB\ComposerPlugin;
 
 
 use Composer\Composer;
