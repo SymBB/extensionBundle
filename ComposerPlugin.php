@@ -20,7 +20,7 @@ class ComposerPlugin implements PluginInterface {
         $package        = $composer->getPackage();
         
         $required   = $package->getRequires();
-        foreach($extensionList['extensions'] as $extension => $data){ 
+        foreach($extensionList as $extension => $data){ 
             if($data['enabled'] && !empty($data['package'])){
                 $constraint = '';
                 if(isset($data['constraint'])){
