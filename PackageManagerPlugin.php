@@ -13,8 +13,8 @@ class PackageManagerPlugin implements PluginInterface {
     {
         $package = $composer->getPackage();
         $requires = $package->getRequires();
+        $requires["seyon/teamspeak3-framework"] = "dev-master";
         $package->setRequires($requires);
-        var_dump($requires);
     }
     
 }
