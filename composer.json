@@ -19,9 +19,9 @@
     },
     "minimum-stability": "dev",
     "autoload": {
-        "psr-0": { "Seyon\\": "" }
+        "psr-0": { "Seyon\\ComposerPlugin\\": "" }
     },
-    "target-dir": "Seyon/",
+    "target-dir": "Seyon/ComposerPlugin",
     "extra": {
         "class": [
             "Seyon\\ComposerPlugin\\PackageManagerPlugin"
