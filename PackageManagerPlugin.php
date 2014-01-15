@@ -12,19 +12,17 @@ class PackageManagerPlugin implements PluginInterface {
     
     public function activate(Composer $composer, IOInterface $io)
     {
-        $package = $composer->getPackage();
-        $requires = $package->getRequires();
-        $requires["seyon/teamspeak3-framework"] = "dev-master";
-        $package->setRequires($requires);
-    }
-    
-    public static function getSubscribedEvents()
-    {
-        return array(
-            PluginEvents::COMMAND => array(
-                array('onCommandDownload', 0)
-            ),
+        $manager = $composer->getRepositoryManager();
+        $config = array(
+            'package' => array(
+                'name' => 'seyon/composer-plugin-package',
+                "require"=> array(
+                    'seyon/teamspeak3-framework' =>  "dev-master"
+               )
+            )
         );
+        $repo = $manager->createRepository('package', $config);
+        $manager->addRepository($repo);
     }
     
 }
