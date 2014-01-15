@@ -16,7 +16,7 @@ class PackageManagerPlugin implements PluginInterface {
         $searchPath = __DIR__.'/../../../../../app/config/';
         
         $yaml   = new Parser();
-        $extensionList = $yaml->parse(file_get_contents($searchPath.'extension.yml'));
+        $extensionList = $yaml->parse(file_get_contents($searchPath.'extensions.yml'));
 
         $required = array();
         
@@ -25,11 +25,6 @@ class PackageManagerPlugin implements PluginInterface {
                 $required[$data['package']] = $data['version'];
             }
         }
-        
-        $finder     = new Finder();
-        $finder->files()
-               ->in($searchPath)
-               ->name('*Bundle.php');
         
         $manager = $composer->getRepositoryManager();
         $config = array(
