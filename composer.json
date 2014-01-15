@@ -1,5 +1,5 @@
 {
-    "name": "seyon/composer_plugin",
+    "name": "seyon/composer-plugin",
     "type": "composer-plugin",
     "description": "composer Plugin to add dynamicly package",
     "keywords": ["plugin"],
