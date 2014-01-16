@@ -38,8 +38,8 @@ class ExtraLoader implements LoaderInterface
         foreach($extensions as $extension){
             if($extension->hasRouting()){
                 $bundleDir      = $extension->getDir();
-                $fileLocator    = new FileLocator($bundleDir.'Resources/config');
-                $file           = $bundleDir.'Resources/config/routing.yml';
+                $fileLocator    = new FileLocator($bundleDir.'/Resources/config');
+                $file           = $bundleDir.'/Resources/config/routing.yml';
                 if(\is_file($file)){
                     $routingLoader  = new \Symfony\Component\Routing\Loader\YamlFileLoader($fileLocator);
                     $newCollection  = $routingLoader->load('routing.yml');

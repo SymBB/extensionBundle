@@ -40,7 +40,7 @@ class Extension {
      }
      
      public function getDir(){
-         $reflector = new ReflectionClass($this->bundleClass);
+         $reflector = new \ReflectionClass($this->bundleClass);
          return dirname($reflector->getFileName());
      }
      
@@ -58,6 +58,12 @@ class Extension {
          }
          
          return false;
+     }
+     
+     public function getPackageForUrl(){
+         $package = $this->getPackage();
+         $package = \str_replace('/', '|', $package);
+         return $package;
      }
      
      
@@ -90,11 +96,11 @@ class Extension {
          $this->bundleClass = $value;
      }
      
-     public function enabled(){
+     public function enable(){
          $this->enabled = true;
      }
      
-     public function disabled(){
+     public function disable(){
          $this->enabled = false;
      }
 

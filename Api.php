@@ -65,7 +65,7 @@ class Api {
             $extension->setVersion($version);
             $extension->setVersionConstraint($versionConstraint);
             $extension->setBundleClass($class);
-            $extension->disabled();
+            $extension->disable();
             
             $this->addExtension($extension);
             
@@ -101,20 +101,50 @@ class Api {
     
     public function disable($extensionName){
         $extensions = self::getExtensions();
-        $extensions[$extensionName]['enabled'] = false;
-        $this->createFile($extensions);
+        $extensions[$extensionName]->disable();
+        
+        $finalData = array();
+        
+        foreach($extensions as $key => $object){
+            $finalData[$key] = $this->convertObjectToArray($object);
+        }
+        
+        $this->createFile($finalData);
     }
     
     public function enable($extensionName){
         $extensions = self::getExtensions();
-        $extensions[$extensionName]['enabled'] = true;
-        $this->createFile($extensions);
+        $extensions[$extensionName]->enable();
+        
+        $finalData = array();
+        
+        foreach($extensions as $key => $object){
+            $finalData[$key] = $this->convertObjectToArray($object);
+        }
+        
+        $this->createFile($finalData);
     }
     
     public function remove($extensionName){
         $extensions = self::getExtensions();
         unset($extensions[$extensionName]);
-        $this->createFile($extensions);
+        
+        $finalData = array();
+        
+        foreach($extensions as $key => $object){
+            $finalData[$key] = $this->convertObjectToArray($object);
+        }
+        
+        $this->createFile($finalData);
+    }
+    
+    public function clearCache(){
+        $dir = __DIR__;
+        $dir = \explode('vendor', $dir);
+        $dir = reset($dir);
+
+        \exec('php '.$dir.'app/console cache:clear --env=dev');
+        \exec('php '.$dir.'app/console cache:clear --env=prod');
     }
     
     public function addExtension(Extension $extension){
@@ -134,6 +164,8 @@ class Api {
         $dumper = new Dumper();
         $yml = $dumper->dump($extensions);
         \file_put_contents(self::getExtensionFilePath(), $yml);
+        
+        $this->clearCache();
     }
 
     protected function convertObjectToArray(Extension $extension){
@@ -170,9 +202,9 @@ class Api {
         $extension->setVersionConstraint($data['versionConstraint']);
         $extension->setBundleClass($data['bundleClass']);
         if($data['enabled']){
-            $extension->enabled();
+            $extension->enable();
         } else {
-           $extension->disabled(); 
+           $extension->disable(); 
         }
         if(!$data['composer']){
             $extension->disableComposer();
