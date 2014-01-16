@@ -22,7 +22,7 @@ class ComposerPlugin implements PluginInterface {
     public function activate(Composer $composer, IOInterface $io)
     {
         
-        $extensionList  = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
+        $extensionList  = \SymBB\ExtensionBundle\Api::getExtensions();
 
         $package        = $composer->getPackage();
         
