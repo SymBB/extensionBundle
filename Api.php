@@ -24,8 +24,15 @@ class Api {
        $this->extensions        = KernelPlugin::getExtensions();
     }
     
-    public function addExtension($packageName, $version, $versionConstraint = ''){
+    public function addExtension($githubUser, $githubRepo, $version, $versionConstraint = ''){
     
+        $client = new \Github\Client();
+        $repo = $client->api('repo')->show($githubUser, $githubRepo);
+        var_dump($repo);
+        
+        $packageName = $githubUser.'/'.$githubRepo;
+        $packageName = \strtolower($packageName);
+        
         $package = $this->packagistClient->get($packageName);
         
         if(\is_object($package)){
