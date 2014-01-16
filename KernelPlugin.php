@@ -14,9 +14,9 @@ class KernelPlugin {
     {
         $extensionList  = \SymBB\ExtensionBundle\Api::getExtensions();
             
-        foreach($extensionList as $extension => $data){ 
-            if($data['enabled']){
-                $class      = $data['class'];
+        foreach($extensionList as $extensionKey => $extension){ 
+            if($extension->isEnabled()){
+                $class      = $extension->getBundleClass();
                 $bundles[]  = new $class();
             }
         } 

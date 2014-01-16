@@ -16,10 +16,9 @@ class Extension {
      protected $version = '';
      protected $versionConstraint = '';
      protected $bundleClass = '';
-     protected $dir = '';
      protected $enabled = true;
-     
-     
+     protected $composer = true;
+
      public function getPackage(){
          return $this->package;
      }
@@ -41,14 +40,35 @@ class Extension {
      }
      
      public function getDir(){
-         return $this->dir;
+         $reflector = new ReflectionClass($this->bundleClass);
+         return dirname($reflector->getFileName());
      }
      
      public function isEnabled(){
          return $this->enabled;
      }
      
+     public function hasRouting(){
+         
+         $dir   = $this->getDir();
+         $file  = $dir .'/Resources/config/routing.yml';
+         
+         if(\is_file($file)){
+             return true;
+         }
+         
+         return false;
+     }
      
+     
+     
+     public function disableComposer(){
+         $this->composer = false;
+     }
+     
+     public function hasComposer(){
+         return $this->composer;
+     }
      
      public function setPackage($value){
          $this->package = $value;
@@ -68,10 +88,6 @@ class Extension {
      
      public function setBundleClass($value){
          $this->bundleClass = $value;
-     }
-     
-     public function setDir($value){
-         $this->dir = $value;
      }
      
      public function enabled(){

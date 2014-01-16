@@ -25,7 +25,7 @@ class Api {
     public function __construct()
     {
        $this->packagistClient   = new \Packagist\Api\Client();
-       $this->extensions        = KernelPlugin::getExtensions();
+       $this->extensions        = self::getExtensions();
     }
     
     public static function getExtensionFilePath(){
@@ -57,7 +57,7 @@ class Api {
             
             
             $nameSpace   = key($composerContent['autoload']['psr-0']);
-            $class       = $nameSpace.'\\'.\str_replace('\\', '' , $nameSpace);
+            $class       = '\\'.$nameSpace.'\\'.\str_replace('\\', '' , $nameSpace);
             
             $extension = new Extension();
             $extension->setPackage($packageName);
@@ -75,40 +75,59 @@ class Api {
         
     }
     
+    /**
+     * 
+     * @return \SymBB\ExtensionBundle\Extension
+     */
     public static function getExtensions(){
         $searchPath     = self::getExtensionFilePath();
-        $extensionList  = array();
+        $extensionListFinal  = array();
+
         if(\is_file($searchPath)){
             $yaml           = new Parser();
             $extensionList  = $yaml->parse(file_get_contents($searchPath));
-            $extensionList  = $extensionList;
+
+            if(!empty($extensionList)){
+                foreach($extensionList as $key => $extensionData){
+                    if(!empty($extensionData)){
+                        $extensionListFinal[$key] = self::getExtensionFromData($extensionData);
+                    }
+                }
+            }
         }
-        return $extensionList;
+
+        return $extensionListFinal;
     }
     
     public function disable($extensionName){
-        $extensions = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
+        $extensions = self::getExtensions();
         $extensions[$extensionName]['enabled'] = false;
         $this->createFile($extensions);
     }
     
     public function enable($extensionName){
-        $extensions = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
+        $extensions = self::getExtensions();
         $extensions[$extensionName]['enabled'] = true;
         $this->createFile($extensions);
     }
     
     public function remove($extensionName){
-        $extensions = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
+        $extensions = self::getExtensions();
         unset($extensions[$extensionName]);
         $this->createFile($extensions);
     }
     
     public function addExtension(Extension $extension){
-        $extensionData = $this->convertObjectToArray($extension);
-        $extensions = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
-        $extensions = $extensions + $extensionData;
-        $this->createFile($extensions);
+        $extensions = self::getExtensions();
+        $extensions[$extension->getPackage()] = $extension;
+        
+        $finalData = array();
+        
+        foreach($extensions as $key => $object){
+            $finalData[$key] = $this->convertObjectToArray($object);
+        }
+        
+        $this->createFile($finalData);
     }
     
     protected function createFile($extensions){
@@ -117,22 +136,49 @@ class Api {
         \file_put_contents(self::getExtensionFilePath(), $yml);
     }
 
-
     protected function convertObjectToArray(Extension $extension){
         
         $data = array(
-            $extension->getPackage() => array(
-                'package'   => $extension->getPackage(),
-                'version'   => $extension->getVersion(),
-                'constraint'=> $extension->getVersionConstraint(),
-                'class'     => $extension->getBundleClass(),
-                'enabled'   => $extension->isEnabled(),
-                'name'      => $extension->getName()
-            )
+            'package'       => $extension->getPackage(),
+            'version'       => $extension->getVersion(),
+            'constraint'    => $extension->getVersionConstraint(),
+            'bundleClass'   => $extension->getBundleClass(),
+            'enabled'       => $extension->isEnabled(),
+            'name'          => $extension->getName(),
+            'composer'      => $extension->hasComposer()
         );
         
         return $data;
         
+    }
+    
+    /**
+     * 
+     * @param type $data
+     * @return \SymBB\ExtensionBundle\Extension
+     */
+    public static function getExtensionFromData($data){
+        
+        if(!isset($data['versionConstraint'])){
+            $data['versionConstraint'] = '';
+        }
+     
+        $extension = new Extension();
+        $extension->setPackage($data['package']);
+        $extension->setName($data['name']);
+        $extension->setVersion($data['version']);
+        $extension->setVersionConstraint($data['versionConstraint']);
+        $extension->setBundleClass($data['bundleClass']);
+        if($data['enabled']){
+            $extension->enabled();
+        } else {
+           $extension->disabled(); 
+        }
+        if(!$data['composer']){
+            $extension->disableComposer();
+        }
+        
+        return $extension;
     }
     
 }

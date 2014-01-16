@@ -31,13 +31,13 @@ class ExtraLoader implements LoaderInterface
             throw new \RuntimeException('Do not add the "extra" loader twice');
         }
 
-        $extensions = \SymBB\ExtensionBundle\KernelPlugin::getExtensions();
+        $extensions = \SymBB\ExtensionBundle\Api::getExtensions();
         
         $routes = new RouteCollection();
         
         foreach($extensions as $extension){
-            if(isset($extension['dir'])){
-                $bundleDir      = $this->root.'/../'.$extension['dir'];
+            if($extension->hasRouting()){
+                $bundleDir      = $extension->getDir();
                 $fileLocator    = new FileLocator($bundleDir.'Resources/config');
                 $file           = $bundleDir.'Resources/config/routing.yml';
                 if(\is_file($file)){

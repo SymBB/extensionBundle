@@ -27,16 +27,13 @@ class ComposerPlugin implements PluginInterface {
         $package        = $composer->getPackage();
         
         $required   = $package->getRequires();
-        foreach($extensionList as $extension => $data){ 
-            if($data['enabled'] && !empty($data['package'])){
-                $constraint = '';
-                if(isset($data['constraint'])){
-                    $constraint = $data['constraint'];
-                }
-                $link = new Link('symbb/symbb', $data['package'],  new VersionConstraint($constraint, $data['version']));
-                $required[$data['package']] = $link;
+        foreach($extensionList as $extension => $extension){ 
+            if($extension->isEnabled() && $extension->hasComposer()){
+                $constraint = $extension->getVersionConstraint();
+                $link = new Link('symbb/symbb', $extension->getPackage(),  new VersionConstraint($constraint, $extension->getVersion()));
+                $required[$extension->getPackage()] = $link;
             }
-        } 
+        }
         
         $package->setRequires($required);
         
