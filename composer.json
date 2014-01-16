@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "composer-plugin-api": "1.0.0"
+        "composer-plugin-api": "1.0.0",
+        "knplabs/packagist-api": "1.*@dev"
     },
     "minimum-stability": "dev",
     "autoload": {
