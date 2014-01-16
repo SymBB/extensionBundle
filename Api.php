@@ -76,7 +76,7 @@ class Api {
     }
     
     public static function getExtensions(){
-        $searchPath     = $this->getExtensionFilePath();
+        $searchPath     = self::getExtensionFilePath();
         $extensionList  = array();
         if(\is_file($searchPath)){
             $yaml           = new Parser();
