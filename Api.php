@@ -30,9 +30,17 @@ class Api {
         
         if(\is_object($package)){
             
-            $repo       = $package->getRepository();
+            $repo           = $package->getRepository();
+            $repo           = \str_replace('.git', '/master', $repo);
+            $repo           = \str_replace('git://', 'https://raw.', $repo);
+            $compsoerUrl    = $repo.'/composer.json';
             
-            var_dump($repo);
+            $composerContent = \file_get_contents($compsoerUrl);
+            $composerContent = \json_decode($composerContent, true);
+            
+            
+            $nameSpace = key($composerContent['autoload']['psr-0']);
+            var_dump($nameSpace);
             
             $extension = new Extension();
             $extension->setPackage($packageName);
