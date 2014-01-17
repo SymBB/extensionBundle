@@ -32,6 +32,11 @@ class Api {
         return __DIR__.self::EXTENSIONS_FILE;
     }
     
+    public function checkFileAccess(){
+        $file = self::getExtensionFilePath();
+        return is_writable($file) ;
+    }
+    
     public function add($githubUrl, $version = 'dev-master', $versionConstraint = ''){
     
         $githubUrlData      = \explode('/', $githubUrl);
@@ -164,8 +169,6 @@ class Api {
         $dumper = new Dumper();
         $yml = $dumper->dump($extensions);
         \file_put_contents(self::getExtensionFilePath(), $yml);
-        
-        $this->clearCache();
     }
 
     protected function convertObjectToArray(Extension $extension){
