@@ -1,11 +1,11 @@
 <?php
 /**
-*
-* @package symBB
-* @copyright (c) 2013-2014 Christian Wielath
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * @package symBB
+ * @copyright (c) 2013-2014 Christian Wielath
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ *
+ */
 
 namespace SymBB\ExtensionBundle\Routing;
 
@@ -16,15 +16,16 @@ use Symfony\Component\Config\FileLocator;
 
 class ExtraLoader implements LoaderInterface
 {
+
     private $loaded = false;
 
     protected $root = '';
-    
+
     public function __construct($kernel)
     {
         $this->root = $kernel->getRootDir();
     }
-    
+
     public function load($resource, $type = null)
     {
         if (true === $this->loaded) {
@@ -32,22 +33,22 @@ class ExtraLoader implements LoaderInterface
         }
 
         $extensions = \SymBB\ExtensionBundle\Api::getExtensions();
-        
+
         $routes = new RouteCollection();
-        
-        foreach($extensions as $extension){
-            if($extension->hasRouting()){
-                $bundleDir      = $extension->getDir();
-                $fileLocator    = new FileLocator($bundleDir.'/Resources/config');
-                $file           = $bundleDir.'/Resources/config/routing.yml';
-                if(\is_file($file)){
-                    $routingLoader  = new \Symfony\Component\Routing\Loader\YamlFileLoader($fileLocator);
-                    $newCollection  = $routingLoader->load('routing.yml');
-                    $routes->addCollection($newCollection);    
+
+        foreach ($extensions as $extension) {
+            if ($extension->isEnabled() && $extension->hasRouting()) {
+                $bundleDir = $extension->getDir();
+                $fileLocator = new FileLocator($bundleDir . '/Resources/config');
+                $file = $bundleDir . '/Resources/config/routing.yml';
+                if (\is_file($file)) {
+                    $routingLoader = new \Symfony\Component\Routing\Loader\YamlFileLoader($fileLocator);
+                    $newCollection = $routingLoader->load('routing.yml');
+                    $routes->addCollection($newCollection);
                 }
             }
         }
-        
+
         $this->loaded = true;
 
         return $routes;
