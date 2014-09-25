@@ -1,17 +1,17 @@
 <?php
 /**
 *
-* @package symBB
+* @package Symbb
 * @copyright (c) 2013-2014 Christian Wielath
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 
-namespace SymBB\ExtensionBundle;
+namespace Symbb\ExtensionBundle;
 
-use \SymBB\ExtensionBundle\Exception\PackagistNotFound;
-use \SymBB\ExtensionBundle\KernelPlugin;
-use \SymBB\ExtensionBundle\Extension;
+use \Symbb\ExtensionBundle\Exception\PackagistNotFound;
+use \Symbb\ExtensionBundle\KernelPlugin;
+use \Symbb\ExtensionBundle\Extension;
 use \Symfony\Component\Yaml\Parser;
 use \Symfony\Component\Yaml\Dumper;
 
@@ -82,7 +82,7 @@ class Api {
     
     /**
      * 
-     * @return \SymBB\ExtensionBundle\Extension
+     * @return \Symbb\ExtensionBundle\Extension
      */
     public static function getExtensions(){
         $searchPath     = self::getExtensionFilePath();
@@ -190,7 +190,7 @@ class Api {
     /**
      * 
      * @param type $data
-     * @return \SymBB\ExtensionBundle\Extension
+     * @return \Symbb\ExtensionBundle\Extension
      */
     public static function getExtensionFromData($data){
         
