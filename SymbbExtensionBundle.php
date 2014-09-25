@@ -7,10 +7,10 @@
 *
 */
 
-namespace SymBB\ExtensionBundle;
+namespace Symbb\ExtensionBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SymBBExtensionBundle extends Bundle
+class SymbbExtensionBundle extends Bundle
 {
 }
