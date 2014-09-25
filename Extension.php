@@ -7,7 +7,7 @@
 *
 */
 
-namespace SymBB\ExtensionBundle;
+namespace Symbb\ExtensionBundle;
 
 class Extension {
     
