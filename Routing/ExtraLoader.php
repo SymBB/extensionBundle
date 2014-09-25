@@ -1,13 +1,13 @@
 <?php
 /**
  *
- * @package symBB
+ * @package Symbb
  * @copyright (c) 2013-2014 Christian Wielath
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 
-namespace SymBB\ExtensionBundle\Routing;
+namespace Symbb\ExtensionBundle\Routing;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
@@ -32,7 +32,7 @@ class ExtraLoader implements LoaderInterface
             throw new \RuntimeException('Do not add the "extra" loader twice');
         }
 
-        $extensions = \SymBB\ExtensionBundle\Api::getExtensions();
+        $extensions = \Symbb\ExtensionBundle\Api::getExtensions();
 
         $routes = new RouteCollection();
 
