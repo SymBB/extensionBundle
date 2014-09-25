@@ -7,7 +7,7 @@
 *
 */
 
-namespace SymBB\ExtensionBundle;
+namespace Symbb\ExtensionBundle;
 
 
 use Composer\Composer;
@@ -22,7 +22,7 @@ class ComposerPlugin implements PluginInterface {
     public function activate(Composer $composer, IOInterface $io)
     {
         
-        $extensionList  = \SymBB\ExtensionBundle\Api::getExtensions();
+        $extensionList  = \Symbb\ExtensionBundle\Api::getExtensions();
 
         $package        = $composer->getPackage();
         
